@@ -294,26 +294,17 @@
 
       <!-- 职工大病保险 -->
       <div v-if="currentPage === 'worker-serious-illness'">
-        <PolicyCard :title="workerSeriousIllness.title" :source="workerSeriousIllness.source" :url="workerSeriousIllness.url">
-          <div v-if="workerSeriousIllness.note" class="note-box" style="background:#fff8e1;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #f9a825;">
-            ⚠️ {{ workerSeriousIllness.note }}
+        <PolicyCard :title="workerSeriousIllness.title" :source="workerSeriousIllness.source">
+          <div v-if="workerSeriousIllness.note" class="note-box" style="background:#e8f5e9;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #4caf50;">
+            💡 {{ workerSeriousIllness.note }}
           </div>
           <div class="info-grid">
-            <div class="info-item"><span class="label">起付线（普通）</span><span class="value">{{ workerSeriousIllness.deduct.normal }}</span></div>
-            <div class="info-item"><span class="label">起付线（困难群体）</span><span class="value">{{ workerSeriousIllness.deduct.hardship }}</span></div>
-            <div class="info-item"><span class="label">报销比例（普通）</span><span class="value">{{ workerSeriousIllness.ratio.normal }}</span></div>
-            <div class="info-item"><span class="label">报销比例（困难）</span><span class="value">{{ workerSeriousIllness.ratio.hardship }}</span></div>
-            <div class="info-item"><span class="label">封顶线（普通）</span><span class="value">{{ workerSeriousIllness.cap.normal }}</span></div>
-            <div class="info-item"><span class="label">封顶线（困难）</span><span class="value">{{ workerSeriousIllness.cap.hardship }}</span></div>
+            <div class="info-item highlight"><span class="label">{{ workerSeriousIllness.trigger.label }}</span><span class="value">{{ workerSeriousIllness.trigger.value }}</span></div>
+            <div class="info-item"><span class="label">报销比例</span><span class="value big">{{ workerSeriousIllness.ratio }}</span></div>
+            <div class="info-item"><span class="label">年度封顶线</span><span class="value big">{{ workerSeriousIllness.cap }}</span></div>
           </div>
           <div v-if="workerSeriousIllness.scope" class="scope-box" style="background:#e8f5e9;padding:10px 14px;border-radius:6px;margin:12px 0;font-size:14px;border-left:3px solid #4caf50;">
             📌 报销范围：{{ workerSeriousIllness.scope }}
-          </div>
-          <div v-if="workerSeriousIllness.incentives" class="incentive-box" style="background:#e3f2fd;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #2196f3;">
-            <div style="font-weight:600;margin-bottom:6px;">🎁 2025年新增激励政策</div>
-            <ul class="note-list" style="margin:0;padding-left:20px;">
-              <li v-for="(inc, i) in workerSeriousIllness.incentives" :key="i">{{ inc }}</li>
-            </ul>
           </div>
           <ul class="note-list">
             <li v-for="(item, i) in workerSeriousIllness.items" :key="i">{{ item }}</li>
@@ -324,10 +315,61 @@
       <!-- 公务员医疗补助 -->
       <div v-if="currentPage === 'civil-servant'">
         <PolicyCard :title="civilServant.title" :source="civilServant.source">
-          <div v-if="civilServant.note" class="note-box" style="background:#fff8e1;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #f9a825;">
-            ⚠️ {{ civilServant.note }}
+          <!-- 三层叠加概览 -->
+          <div class="overview-box" style="background:linear-gradient(135deg,#e3f2fd,#f3e5f5);padding:14px 16px;border-radius:8px;margin-bottom:14px;font-size:14px;line-height:1.8;border-left:4px solid #7c4dff;">
+            {{ civilServant.overview }}
           </div>
-          <PolicyItem v-for="(item, i) in civilServant.items" :key="i" :label="item.label" :content="item.content" />
+
+          <!-- 谁能享受 -->
+          <div class="section-divider">
+            <h3>👤 {{ civilServant.eligibility.label }}</h3>
+            <p>{{ civilServant.eligibility.value }}</p>
+          </div>
+
+          <!-- 每月个人账户 -->
+          <div class="section-divider">
+            <h3>💳 {{ civilServant.personalAccount.label }}</h3>
+            <ul class="note-list">
+              <li v-for="(item, i) in civilServant.personalAccount.items" :key="i">{{ item }}</li>
+            </ul>
+          </div>
+
+          <!-- 住院二次报销 -->
+          <div class="section-divider">
+            <h3>🏥 {{ civilServant.hospitalization.label }}</h3>
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">{{ civilServant.hospitalization.desc }}</p>
+            <ul class="note-list" style="margin-bottom:10px;">
+              <li v-for="(rule, i) in civilServant.hospitalization.rules" :key="i">✅ {{ rule }}</li>
+            </ul>
+            <table class="policy-table" style="margin-top:8px;">
+              <thead>
+                <tr><th>职级</th><th>在职报销</th><th>退休报销</th></tr>
+              </thead>
+              <tbody>
+                <tr v-for="(r, i) in civilServant.hospitalization.ratios" :key="i">
+                  <td>{{ r.rank }}</td>
+                  <td><strong>{{ r.active }}</strong></td>
+                  <td><strong>{{ r.retired }}</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 门诊补助 -->
+          <div class="section-divider">
+            <h3>🩺 {{ civilServant.outpatient.label }}</h3>
+            <ul class="note-list">
+              <li v-for="(item, i) in civilServant.outpatient.items" :key="i">{{ item }}</li>
+            </ul>
+          </div>
+
+          <!-- 举例 -->
+          <div class="example-box" style="background:#fff3e0;padding:12px 14px;border-radius:8px;margin-top:12px;border-left:4px solid #ff9800;">
+            <h3 style="margin-top:0;">🧮 {{ civilServant.example.label }}</h3>
+            <ul class="note-list" style="margin:0;">
+              <li v-for="(item, i) in civilServant.example.items" :key="i">{{ item }}</li>
+            </ul>
+          </div>
         </PolicyCard>
       </div>
     </main>
