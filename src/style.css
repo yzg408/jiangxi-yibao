@@ -464,3 +464,37 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
+
+/* === Info Grid === */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+}
+@media (max-width: 599px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.info-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.info-item .label {
+  font-size: 0.82rem;
+  color: #888;
+  white-space: nowrap;
+}
+.info-item .value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  text-align: right;
+}

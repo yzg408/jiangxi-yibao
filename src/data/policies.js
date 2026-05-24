@@ -23,7 +23,9 @@ export const categories = [
   { id: 'chronic', name: '门诊慢特病', icon: '📋' },
   { id: 'cross-region', name: '异地就医', icon: '🚄' },
   { id: 'dual-channel', name: '双通道药品', icon: '💊' },
-  { id: 'guide', name: '办事指南', icon: '📄' },
+  { id: 'guide', name: '办事指南', icon: '📖' },
+  { id: 'worker-serious-illness', name: '职工大病保险', icon: '🔰' },
+  { id: 'civil-servant', name: '公务员补助', icon: '🏛️' },
 ]
 
 /** 参保缴费 */
@@ -129,16 +131,105 @@ export const inpatientResident = {
     '住院分娩：取消起付线，政策范围内二级及以下报销100%，三级报销90%。无痛分娩、辅助生殖已纳入医保报销。'
   ],
   seriousIllness: {
-    title: '大病保险',
-    source: '《关于健全完善城乡居民大病保险的通知》(赣医保发[2024]7号)',
+    title: '城乡居民大病保险',
+    source: '《关于健全完善城乡居民大病保险的实施意见》(赣医保发〔2024〕10号) — 2025-01-01起执行',
+    url: 'https://ybj.jiangxi.gov.cn/jxsylbzj/col/col65263/content/content_1871920914456489984.html',
+    deduct: {
+      normal: '按上年度全省居民人均可支配收入的50%确定，2025年约1.7万元',
+      hardship: '特困/孤儿/低保/返贫致贫人员减半，约0.85万元'
+    },
+    ratio: {
+      normal: '60%',
+      hardship: '65%'
+    },
+    cap: {
+      normal: '不低于25万元（南昌市30万元）',
+      hardship: '不设封顶线'
+    },
+    scope: '住院 + Ⅰ类门诊慢特病（基本医保报销后的合规自付部分）。不含：乙类先行自付、超限价费用、转外先行自付、目录外自费、非定点医疗机构费用',
+    incentives: [
+      '连续参保激励：连续参保满4年后，每多1年，封顶线+3000元',
+      '零报销激励：当年未报销者，次年封顶线+3000元（可累计）',
+      '封顶线提升上限：不超过原封顶线的20%'
+    ],
     items: [
-      '起付线：南昌市2024年度为19185元（上上年度城乡居民人均可支配收入的50%）。',
-      '报销比例：起付线以上至6.7万元部分报60%，6.7万元以上部分报90%。',
-      '封顶线：普通居民40万元。特困人员、孤儿、低保对象、返贫致贫人口取消封顶线。',
-      '特困群体倾斜：起付线降低50%，报销比例提高5个百分点。',
-      '连续参保激励：连续参保满4年，每多1年提高封顶线3000元；当年未报销者次年提高3000元。'
+      '起付线（普通居民）：按上年度全省居民人均可支配收入的50%确定，2025年约1.7万元',
+      '起付线（困难群体）：特困/孤儿/低保/返贫致贫人员减半，约0.85万元',
+      '报销比例（普通居民）：60%',
+      '报销比例（困难群体）：65%',
+      '封顶线（普通居民）：不低于25万元（南昌市30万元）',
+      '封顶线（困难群体）：不设封顶线',
+      '连续参保激励：连续参保满4年，每多1年封顶线+3000元',
+      '零报销激励：当年未报销，次年封顶线+3000元（可累计）',
+      '封顶线提升上限：不超过原封顶线的20%'
     ]
   }
+}
+
+/** 职工大病保险 */
+export const workerSeriousIllness = {
+  title: '南昌市职工大病保险',
+  source: '《关于健全完善城乡居民大病保险的实施意见》(赣医保发〔2024〕10号) — 2025-01-01起执行',
+  url: 'https://ybj.jiangxi.gov.cn/jxsylbzj/col/col65263/content/content_1871920914456489984.html',
+  note: '职工大病保险参照城乡居民大病保险标准执行，起付线、报销比例、封顶线与居民一致。',
+  deduct: {
+    normal: '按上年度全省居民人均可支配收入的50%确定，2025年约1.7万元',
+    hardship: '特困/孤儿/低保/返贫致贫人员减半，约0.85万元'
+  },
+  ratio: {
+    normal: '60%',
+    hardship: '65%'
+  },
+  cap: {
+    normal: '不低于25万元（南昌市30万元）',
+    hardship: '不设封顶线'
+  },
+  scope: '住院 + Ⅰ类门诊慢特病（基本医保报销后的合规自付部分）。不含：乙类先行自付、超限价费用、转外先行自付、目录外自费、非定点医疗机构费用',
+  incentives: [
+    '连续参保激励：连续参保满4年后，每多1年，封顶线+3000元',
+    '零报销激励：当年未报销者，次年封顶线+3000元（可累计）',
+    '封顶线提升上限：不超过原封顶线的20%'
+  ],
+  items: [
+    '参保范围：参加南昌市职工基本医疗保险的人员，均须同步参加大病保险。',
+    '起付线（普通）：按上年度全省居民人均可支配收入的50%确定，2025年约1.7万元',
+    '起付线（困难群体）：特困/孤儿/低保/返贫致贫减半，约0.85万元',
+    '报销比例（普通）：60%',
+    '报销比例（困难群体）：65%',
+    '封顶线（普通）：不低于25万元（南昌市30万元）',
+    '封顶线（困难群体）：不设封顶线',
+    '连续参保满4年：每多1年，封顶线+3000元',
+    '当年零报销：次年封顶线+3000元（可累计，不超过原封顶线20%）'
+  ]
+}
+
+/** 公务员医疗补助 */
+export const civilServant = {
+  title: '南昌市公务员医疗补助',
+  source: '南昌市《机关事业单位人员医疗补助实施办法》(2023-2025更新) — 参照景德镇景府办发〔2023〕8号 + 赣医保发〔2021〕3号待遇清单规范',
+  note: '南昌、九江、抚州均已更新本地实施办法，框架参照景德镇市2023年范本，报销比例、封顶线基本一致。',
+  items: [
+    {
+      label: '适用对象',
+      content: '南昌市机关事业单位的在职工作人员和退休人员。'
+    },
+    {
+      label: '筹资标准',
+      content: '按本人工资（退休金）总额的4%缴纳，由单位承担。其中50%（即工资总额2%）划入个人账户，50%（即工资总额2%）划入公务员医疗补助统筹基金。'
+    },
+    {
+      label: '住院二次补偿',
+      content: '住院发生的政策范围内个人自付费用（不含起付线和全额自费项目），超过本人年工资（退休金）20%至30%的部分，补助50%；超过30%以上的部分，补助80%。'
+    },
+    {
+      label: '门诊补助',
+      content: '公务员门诊就医优先使用个人账户。个人账户不足时，超出部分按相关规定可享受补助，具体由各统筹地区确定。'
+    },
+    {
+      label: '个账注入',
+      content: '补助资金的50%（即工资总额的2%）划入个人账户，用于门诊就医和定点药店购药。'
+    }
+  ]
 }
 
 /** 门诊待遇 */
@@ -340,6 +431,14 @@ export function buildSearchIndex() {
   guide.contacts.forEach(c => push('guide', gCat.name, gCat.icon, c.area, c.phone))
   guide.onlinePlatforms.forEach(p => push('guide', gCat.name, gCat.icon, p.name, p.desc || ''))
   guide.processItems.forEach(p => push('guide', gCat.name, gCat.icon, p.title, p.steps.join(' ')))
+
+  // 职工大病保险
+  const wsiCat = categories.find(c => c.id === 'worker-serious-illness')
+  workerSeriousIllness.items.forEach(item => push('worker-serious-illness', wsiCat.name, wsiCat.icon, workerSeriousIllness.title, item))
+
+  // 公务员医疗补助
+  const csCat = categories.find(c => c.id === 'civil-servant')
+  civilServant.items.forEach(item => push('civil-servant', csCat.name, csCat.icon, item.label, item.content))
 
   return index
 }

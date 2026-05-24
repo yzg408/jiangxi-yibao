@@ -137,7 +137,27 @@
           </ul>
         </PolicyCard>
 
-        <PolicyCard :title="inpatientResident.seriousIllness.title" :source="inpatientResident.seriousIllness.source">
+        <PolicyCard :title="inpatientResident.seriousIllness.title" :source="inpatientResident.seriousIllness.source" :url="inpatientResident.seriousIllness.url">
+          <div v-if="inpatientResident.seriousIllness.note" class="note-box" style="background:#fff8e1;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #f9a825;">
+            ⚠️ {{ inpatientResident.seriousIllness.note }}
+          </div>
+          <div class="info-grid">
+            <div class="info-item"><span class="label">起付线（普通居民）</span><span class="value">{{ inpatientResident.seriousIllness.deduct.normal }}</span></div>
+            <div class="info-item"><span class="label">起付线（困难群体）</span><span class="value">{{ inpatientResident.seriousIllness.deduct.hardship }}</span></div>
+            <div class="info-item"><span class="label">报销比例（普通）</span><span class="value">{{ inpatientResident.seriousIllness.ratio.normal }}</span></div>
+            <div class="info-item"><span class="label">报销比例（困难）</span><span class="value">{{ inpatientResident.seriousIllness.ratio.hardship }}</span></div>
+            <div class="info-item"><span class="label">封顶线（普通）</span><span class="value">{{ inpatientResident.seriousIllness.cap.normal }}</span></div>
+            <div class="info-item"><span class="label">封顶线（困难）</span><span class="value">{{ inpatientResident.seriousIllness.cap.hardship }}</span></div>
+          </div>
+          <div v-if="inpatientResident.seriousIllness.scope" class="scope-box" style="background:#e8f5e9;padding:10px 14px;border-radius:6px;margin:12px 0;font-size:14px;border-left:3px solid #4caf50;">
+            📌 报销范围：{{ inpatientResident.seriousIllness.scope }}
+          </div>
+          <div v-if="inpatientResident.seriousIllness.incentives" class="incentive-box" style="background:#e3f2fd;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #2196f3;">
+            <div style="font-weight:600;margin-bottom:6px;">🎁 2025年新增激励政策</div>
+            <ul class="note-list" style="margin:0;padding-left:20px;">
+              <li v-for="(inc, i) in inpatientResident.seriousIllness.incentives" :key="i">{{ inc }}</li>
+            </ul>
+          </div>
           <ul class="note-list">
             <li v-for="(item, i) in inpatientResident.seriousIllness.items" :key="i">{{ item }}</li>
           </ul>
@@ -271,6 +291,45 @@
           </div>
         </PolicyCard>
       </div>
+
+      <!-- 职工大病保险 -->
+      <div v-if="currentPage === 'worker-serious-illness'">
+        <PolicyCard :title="workerSeriousIllness.title" :source="workerSeriousIllness.source" :url="workerSeriousIllness.url">
+          <div v-if="workerSeriousIllness.note" class="note-box" style="background:#fff8e1;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #f9a825;">
+            ⚠️ {{ workerSeriousIllness.note }}
+          </div>
+          <div class="info-grid">
+            <div class="info-item"><span class="label">起付线（普通）</span><span class="value">{{ workerSeriousIllness.deduct.normal }}</span></div>
+            <div class="info-item"><span class="label">起付线（困难群体）</span><span class="value">{{ workerSeriousIllness.deduct.hardship }}</span></div>
+            <div class="info-item"><span class="label">报销比例（普通）</span><span class="value">{{ workerSeriousIllness.ratio.normal }}</span></div>
+            <div class="info-item"><span class="label">报销比例（困难）</span><span class="value">{{ workerSeriousIllness.ratio.hardship }}</span></div>
+            <div class="info-item"><span class="label">封顶线（普通）</span><span class="value">{{ workerSeriousIllness.cap.normal }}</span></div>
+            <div class="info-item"><span class="label">封顶线（困难）</span><span class="value">{{ workerSeriousIllness.cap.hardship }}</span></div>
+          </div>
+          <div v-if="workerSeriousIllness.scope" class="scope-box" style="background:#e8f5e9;padding:10px 14px;border-radius:6px;margin:12px 0;font-size:14px;border-left:3px solid #4caf50;">
+            📌 报销范围：{{ workerSeriousIllness.scope }}
+          </div>
+          <div v-if="workerSeriousIllness.incentives" class="incentive-box" style="background:#e3f2fd;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #2196f3;">
+            <div style="font-weight:600;margin-bottom:6px;">🎁 2025年新增激励政策</div>
+            <ul class="note-list" style="margin:0;padding-left:20px;">
+              <li v-for="(inc, i) in workerSeriousIllness.incentives" :key="i">{{ inc }}</li>
+            </ul>
+          </div>
+          <ul class="note-list">
+            <li v-for="(item, i) in workerSeriousIllness.items" :key="i">{{ item }}</li>
+          </ul>
+        </PolicyCard>
+      </div>
+
+      <!-- 公务员医疗补助 -->
+      <div v-if="currentPage === 'civil-servant'">
+        <PolicyCard :title="civilServant.title" :source="civilServant.source">
+          <div v-if="civilServant.note" class="note-box" style="background:#fff8e1;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #f9a825;">
+            ⚠️ {{ civilServant.note }}
+          </div>
+          <PolicyItem v-for="(item, i) in civilServant.items" :key="i" :label="item.label" :content="item.content" />
+        </PolicyCard>
+      </div>
     </main>
   </div>
 </template>
@@ -281,6 +340,7 @@ import PolicyItem from './components/PolicyItem.vue'
 import {
   categories, payment, inpatientWorker, inpatientResident,
   outpatient, chronic, crossRegion, dualChannel, guide,
+  workerSeriousIllness, civilServant,
   buildSearchIndex, searchPolicies
 } from './data/policies.js'
 
@@ -293,6 +353,7 @@ export default {
       categories,
       payment, inpatientWorker, inpatientResident,
       outpatient, chronic, crossRegion, dualChannel, guide,
+      workerSeriousIllness, civilServant,
       searchQuery: '',
       searchResults: [],
       showResults: false,
