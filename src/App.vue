@@ -138,22 +138,21 @@
         </PolicyCard>
 
         <PolicyCard :title="inpatientResident.seriousIllness.title" :source="inpatientResident.seriousIllness.source" :url="inpatientResident.seriousIllness.url">
-          <div v-if="inpatientResident.seriousIllness.note" class="note-box" style="background:#fff8e1;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #f9a825;">
-            ⚠️ {{ inpatientResident.seriousIllness.note }}
+          <div v-if="inpatientResident.seriousIllness.note" class="note-box" style="background:#e8f5e9;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #4caf50;">
+            💡 {{ inpatientResident.seriousIllness.note }}
           </div>
           <div class="info-grid">
-            <div class="info-item"><span class="label">起付线（普通居民）</span><span class="value">{{ inpatientResident.seriousIllness.deduct.normal }}</span></div>
-            <div class="info-item"><span class="label">起付线（困难群体）</span><span class="value">{{ inpatientResident.seriousIllness.deduct.hardship }}</span></div>
-            <div class="info-item"><span class="label">报销比例（普通）</span><span class="value">{{ inpatientResident.seriousIllness.ratio.normal }}</span></div>
-            <div class="info-item"><span class="label">报销比例（困难）</span><span class="value">{{ inpatientResident.seriousIllness.ratio.hardship }}</span></div>
-            <div class="info-item"><span class="label">封顶线（普通）</span><span class="value">{{ inpatientResident.seriousIllness.cap.normal }}</span></div>
-            <div class="info-item"><span class="label">封顶线（困难）</span><span class="value">{{ inpatientResident.seriousIllness.cap.hardship }}</span></div>
+            <div class="info-item highlight"><span class="label">起付线</span><span class="value">{{ inpatientResident.seriousIllness.deduct }}</span></div>
+            <div class="info-item" v-for="(t, i) in inpatientResident.seriousIllness.tiers" :key="i">
+              <span class="label">{{ t.range }}</span><span class="value big">{{ t.ratio }}</span>
+            </div>
+            <div class="info-item"><span class="label">年度封顶线</span><span class="value big">{{ inpatientResident.seriousIllness.cap }}</span></div>
           </div>
           <div v-if="inpatientResident.seriousIllness.scope" class="scope-box" style="background:#e8f5e9;padding:10px 14px;border-radius:6px;margin:12px 0;font-size:14px;border-left:3px solid #4caf50;">
             📌 报销范围：{{ inpatientResident.seriousIllness.scope }}
           </div>
           <div v-if="inpatientResident.seriousIllness.incentives" class="incentive-box" style="background:#e3f2fd;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:14px;border-left:3px solid #2196f3;">
-            <div style="font-weight:600;margin-bottom:6px;">🎁 2025年新增激励政策</div>
+            <div style="font-weight:600;margin-bottom:6px;">🎁 参保激励政策</div>
             <ul class="note-list" style="margin:0;padding-left:20px;">
               <li v-for="(inc, i) in inpatientResident.seriousIllness.incentives" :key="i">{{ inc }}</li>
             </ul>
