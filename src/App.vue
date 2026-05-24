@@ -26,24 +26,11 @@
       </form>
     </div>
 
-    <!-- Navigation -->
-    <nav class="nav-bar">
-      <div
-        v-for="cat in categories"
-        :key="cat.id"
-        class="nav-item"
-        :class="{ active: currentPage === cat.id }"
-        @click="navigateTo(cat.id)"
-      >
-        {{ cat.icon }} {{ cat.name }}
-      </div>
-    </nav>
-
-    <!-- Search Results Overlay -->
-    <div v-if="showResults && searchResults.length > 0" class="search-overlay" @mousedown.prevent @click.self="clearSearch">
-      <div class="search-results">
-        <div class="search-results-header">
-          找到 <strong>{{ searchResults.length }}</strong> 条结果
+    <!-- Search Results Section（原位结果，像5189一样） -->
+    <div v-if="showResults" class="search-section">
+      <div v-if="searchResults.length > 0">
+        <div class="search-section-header">
+          🔍 "<strong>{{ searchQuery }}</strong>" 共 <strong>{{ searchResults.length }}</strong> 条结果
           <span class="search-close" @click="clearSearch">✕</span>
         </div>
         <div
@@ -57,23 +44,27 @@
           <div class="result-snippet">{{ r.snippet }}</div>
         </div>
       </div>
-    </div>
-
-    <!-- No Results -->
-    <div v-if="showResults && searchQuery && searchResults.length === 0" class="search-overlay" @click.self="clearSearch">
-      <div class="search-results">
-        <div class="search-results-header">
-          没有找到 "{{ searchQuery }}" 相关结果
-          <span class="search-close" @click="clearSearch">✕</span>
-        </div>
-        <div style="padding:20px;text-align:center;color:var(--text-secondary);font-size:0.9rem;">
-          试试其他关键词，如：住院、门诊、报销、缴费、异地…
-        </div>
+      <div v-else class="search-section-empty">
+        没有找到 "<strong>{{ searchQuery }}</strong>" 相关结果<br>
+        <span style="font-size:0.85rem;color:var(--text-secondary);">试试其他关键词，如：住院、门诊、报销、缴费、异地…</span>
       </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="main-content" @click="clearSearch">
+    <!-- Navigation（搜索时隐藏） -->
+    <nav v-show="!showResults" class="nav-bar">
+      <div
+        v-for="cat in categories"
+        :key="cat.id"
+        class="nav-item"
+        :class="{ active: currentPage === cat.id }"
+        @click="navigateTo(cat.id)"
+      >
+        {{ cat.icon }} {{ cat.name }}
+      </div>
+    </nav>
+
+    <!-- Main Content（搜索时隐藏） -->
+    <main v-show="!showResults" class="main-content">
       <!-- Disclaimer -->
       <div class="disclaimer">
         <strong>⚠️ 郑重声明</strong><br>

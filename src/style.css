@@ -127,37 +127,59 @@ body {
   background: var(--border);
 }
 
-/* === Search Results Overlay === */
-.search-overlay {
-  position: relative;
-  z-index: 50;
-  padding: 0 16px;
+/* === Search Results Section（原位，像5189一样） === */
+.search-section {
+  padding: 0 16px 16px;
   max-width: 800px;
   margin: 0 auto;
 }
 
-.search-results {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-hover);
-  max-height: 400px;
-  overflow-y: auto;
-  margin-top: -4px;
-}
-
-.search-results-header {
-  padding: 12px 16px;
-  font-size: 0.82rem;
+.search-section-header {
+  padding: 16px 16px 12px;
+  font-size: 0.85rem;
   color: var(--text-secondary);
-  border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 0;
   background: var(--card);
-  z-index: 1;
+  border: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  border-bottom: none;
+}
+
+.search-section-header strong {
+  color: var(--text);
+}
+
+.search-section-empty {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.search-section .search-result-item:first-of-type {
+  border-top: none;
+}
+
+/* Same result items but adapted for section */
+.search-section .search-result-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.1s;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: none;
+}
+
+.search-section .search-result-item:last-child {
+  border-bottom: 1px solid var(--border);
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .search-close {
@@ -168,14 +190,6 @@ body {
 }
 .search-close:active { background: var(--border); }
 
-.search-result-item {
-  padding: 12px 16px;
-  cursor: pointer;
-  border-bottom: 1px solid #f0f0f0;
-  transition: background 0.1s;
-}
-
-.search-result-item:last-child { border-bottom: none; }
 .search-result-item:active { background: var(--primary-light); }
 
 .result-cat {
