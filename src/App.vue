@@ -8,22 +8,18 @@
 
     <!-- Search Bar -->
     <div class="search-bar">
-      <form @submit.prevent="onSearchEnter" class="search-form">
-        <div class="search-inner">
-          <span class="search-icon">🔍</span>
-          <input
-            ref="searchInput"
-            v-model="searchQuery"
-            class="search-input"
-            type="search"
-            placeholder="搜政策，如：住院报销、门诊共济、异地就医…"
-            @input="onSearch"
-            @search="onSearchEnter"
-            @keydown.escape="clearSearch"
-          />
-          <span v-if="searchQuery" class="search-clear" @click="clearSearch">✕</span>
-        </div>
-      </form>
+      <div class="search-inner">
+        <span class="search-icon">🔍</span>
+        <input
+          ref="searchInput"
+          v-model="searchQuery"
+          class="search-input"
+          type="text"
+          placeholder="搜政策，如：住院报销、门诊共济、异地就医…"
+          @input="onSearch"
+        />
+        <span v-if="searchQuery" class="search-clear" @click="clearSearch">✕</span>
+      </div>
     </div>
 
     <!-- Search Results Section（原位结果，像5189一样） -->
@@ -330,9 +326,6 @@ export default {
       this.searchQuery = ''
       this.searchResults = []
       this.showResults = false
-    },
-    onSearchEnter() {
-      this.onSearch()
     },
   }
 }

@@ -65,12 +65,6 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
-.search-form {
-  display: block;
-  margin: 0;
-  padding: 0;
-}
-
 .search-inner {
   display: flex;
   align-items: center;
@@ -100,13 +94,6 @@ body {
   font-size: 0.9rem;
   color: var(--text);
   font-family: inherit;
-}
-
-/* 隐藏 type=search 原生清除按钮 */
-.search-input::-webkit-search-cancel-button,
-.search-input::-webkit-search-decoration {
-  -webkit-appearance: none;
-  display: none;
 }
 
 .search-input::placeholder {
