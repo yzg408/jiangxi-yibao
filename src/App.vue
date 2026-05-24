@@ -8,21 +8,22 @@
 
     <!-- Search Bar -->
     <div class="search-bar">
-      <div class="search-inner">
-        <span class="search-icon">🔍</span>
-        <input
-          ref="searchInput"
-          v-model="searchQuery"
-          class="search-input"
-          type="text"
-          placeholder="搜政策，如：住院报销、门诊共济、异地就医…"
-          @input="onSearch"
-          @keydown.escape="clearSearch"
-          @blur="onBlur"
-          @focus="onFocus"
-        />
-        <span v-if="searchQuery" class="search-clear" @click="clearSearch">✕</span>
-      </div>
+      <form @submit.prevent="onSearchEnter" class="search-form">
+        <div class="search-inner">
+          <span class="search-icon">🔍</span>
+          <input
+            ref="searchInput"
+            v-model="searchQuery"
+            class="search-input"
+            type="search"
+            placeholder="搜政策，如：住院报销、门诊共济、异地就医…"
+            @input="onSearch"
+            @search="onSearchEnter"
+            @keydown.escape="clearSearch"
+          />
+          <span v-if="searchQuery" class="search-clear" @click="clearSearch">✕</span>
+        </div>
+      </form>
     </div>
 
     <!-- Navigation -->
@@ -338,21 +339,10 @@ export default {
       this.searchQuery = ''
       this.searchResults = []
       this.showResults = false
-      this.$nextTick(() => {
-        if (this.$refs.searchInput) this.$refs.searchInput.blur()
-      })
     },
-    onBlur() {
-      // 延迟关闭让点击结果有机会触发
-      setTimeout(() => {
-        if (!this.searchFocused) this.showResults = false
-      }, 200)
+    onSearchEnter() {
+      this.onSearch()
     },
-    onFocus() {
-      if (this.searchQuery && this.searchResults.length > 0) {
-        this.showResults = true
-      }
-    }
   }
 }
 </script>
