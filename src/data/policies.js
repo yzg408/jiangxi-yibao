@@ -301,13 +301,13 @@ export function buildSearchIndex() {
 
   // 职工住院
   const iwCat = categories.find(c => c.id === 'inpatient-worker')
-  push('inpatient-worker', iwCat.name, iwCat.icon, iwCat.title, inpatientWorker.table.rows.map(r => r.join(' ')))
-  inpatientWorker.notes.forEach(n => push('inpatient-worker', iwCat.name, iwCat.icon, iwCat.title, n))
+  push('inpatient-worker', iwCat.name, iwCat.icon, inpatientWorker.title, inpatientWorker.table.rows.map(r => r.join(' ')))
+  inpatientWorker.notes.forEach(n => push('inpatient-worker', iwCat.name, iwCat.icon, inpatientWorker.title, n))
 
   // 居民住院
   const irCat = categories.find(c => c.id === 'inpatient-resident')
-  push('inpatient-resident', irCat.name, irCat.icon, irCat.title, inpatientResident.table.rows.map(r => r.join(' ')))
-  inpatientResident.notes.forEach(n => push('inpatient-resident', irCat.name, irCat.icon, irCat.title, n))
+  push('inpatient-resident', irCat.name, irCat.icon, inpatientResident.title, inpatientResident.table.rows.map(r => r.join(' ')))
+  inpatientResident.notes.forEach(n => push('inpatient-resident', irCat.name, irCat.icon, inpatientResident.title, n))
   inpatientResident.seriousIllness.items.forEach(item => push('inpatient-resident', irCat.name, irCat.icon, inpatientResident.seriousIllness.title, item))
 
   // 门诊
@@ -353,14 +353,16 @@ export function searchPolicies(query, index) {
   // 按相关性排序：标题匹配 > 内容匹配
   const scored = index.map(entry => {
     let score = 0
-    if (entry.title.toLowerCase().includes(q)) score += 10
+    const entryTitle = entry.title || ''
+    const entryText = entry.text || ''
+    if (entryTitle.toLowerCase().includes(q)) score += 10
     // 关键词拆字匹配
     const words = q.split(/[\s,，、]+/).filter(w => w.length > 0)
     words.forEach(w => {
-      if (entry.text.includes(w)) score += 1
+      if (entryText.includes(w)) score += 1
     })
     // 精确短语匹配加分
-    if (entry.text.includes(q)) score += 5
+    if (entryText.includes(q)) score += 5
     return { ...entry, score }
   })
   return scored.filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 30)
